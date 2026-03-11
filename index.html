@@ -847,7 +847,7 @@ footer {
       </p>
 
       <div class="waitlist-form" id="waitlist">
-        <form name="waitlist" method="POST" data-netlify="true" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
+        <form name="waitlist" method="POST" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
           <input type="hidden" name="form-name" value="waitlist" />
           <div class="form-row">
             <input type="email" name="email" class="email-input" id="heroEmail" placeholder="your@email.com" required />
@@ -993,7 +993,7 @@ footer {
   <div class="cta-inner">
     <h2 class="cta-h2">Your home deserves<br>a little <em>Homli.</em></h2>
     <p class="cta-sub">Join the waitlist and be first to know when we launch. Early access members get 3 months of premium free.</p>
-    <form name="waitlist" method="POST" data-netlify="true" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
+    <form name="waitlist" method="POST" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
       <input type="hidden" name="form-name" value="waitlist" />
       <input type="email" name="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" required />
       <button type="submit" class="cta-btn">Join waitlist →</button>
@@ -1012,11 +1012,11 @@ footer {
   <div class="footer-links">
     <a href="#">Privacy</a>
     <a href="#">Terms</a>
-    <a href="mailto:hello@homli.app">Contact</a>
+    <a href="/cdn-cgi/l/email-protection#88e0ede4e4e7c8e0e7e5e4e1a6e9f8f8">Contact</a>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1054,7 +1054,7 @@ footer {
       return;
     }
     try {
-      await fetch('/.netlify/functions/subscribe', {
+      await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email })
@@ -1076,8 +1076,4 @@ footer {
       if (count >= target) clearInterval(timer);
     }, 25);
   }
-  const counterEl = document.getElementById('counter');
-  if (counterEl) setTimeout(() => animateCounter(counterEl, 247), 800);
-</script>
-</body>
-</html>
+  const 
