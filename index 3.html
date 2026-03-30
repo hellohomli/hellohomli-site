@@ -847,7 +847,7 @@ footer {
       </p>
 
       <div class="waitlist-form" id="waitlist">
-        <form name="waitlist" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
+        <form name="waitlist" method="POST" data-netlify="true" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
           <input type="hidden" name="form-name" value="waitlist" />
           <div class="form-row">
             <input type="email" name="email" class="email-input" id="heroEmail" placeholder="your@email.com" required />
@@ -993,7 +993,7 @@ footer {
   <div class="cta-inner">
     <h2 class="cta-h2">Your home deserves<br>a little <em>Homli.</em></h2>
     <p class="cta-sub">Join the waitlist and be first to know when we launch. Early access members get 3 months of premium free.</p>
-    <form name="waitlist" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
+    <form name="waitlist" method="POST" data-netlify="true" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
       <input type="hidden" name="form-name" value="waitlist" />
       <input type="email" name="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" required />
       <button type="submit" class="cta-btn">Join waitlist →</button>
@@ -1054,7 +1054,7 @@ footer {
       return;
     }
     try {
-      await fetch('/api/subscribe', {
+      await fetch('/.netlify/functions/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email })

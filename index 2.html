@@ -123,10 +123,9 @@ nav {
   opacity: 0.45;
   pointer-events: none;
 }
-.blob-1 { width: 500px; height: 500px; background: var(--blush); top: -100px; right: -100px; animation: drift1 12s ease-in-out infinite; will-change: transform; }
-.blob-2 { width: 350px; height: 350px; background: var(--sage); bottom: 0; left: -80px; animation: drift2 15s ease-in-out infinite; will-change: transform; }
-.blob-3 { width: 250px; height: 250px; background: var(--lavender); top: 40%; right: 30%; animation: drift3 10s ease-in-out infinite; will-change: transform; }
-@media (max-width: 768px) { .blob-3 { display: none; } }
+.blob-1 { width: 500px; height: 500px; background: var(--blush); top: -100px; right: -100px; animation: drift1 12s ease-in-out infinite; }
+.blob-2 { width: 350px; height: 350px; background: var(--sage); bottom: 0; left: -80px; animation: drift2 15s ease-in-out infinite; }
+.blob-3 { width: 250px; height: 250px; background: var(--lavender); top: 40%; right: 30%; animation: drift3 10s ease-in-out infinite; }
 
 @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px, 40px) scale(1.05); } }
 @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.08); } }
@@ -800,10 +799,6 @@ footer {
   footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
   body { cursor: auto; }
   .cursor, .cursor-ring { display: none; }
-  .blob { animation: none !important; }
-  .phone { animation: none !important; }
-  .notif-float { animation: none !important; }
-  .score-bubble { animation: none !important; }
 }
 </style>
 </head>
@@ -847,7 +842,7 @@ footer {
       </p>
 
       <div class="waitlist-form" id="waitlist">
-        <form name="waitlist" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
+        <form name="waitlist" method="POST" data-netlify="true" style="margin:0;" onsubmit="handleFormSubmit(event, 'heroEmail', 'heroSuccess')">
           <input type="hidden" name="form-name" value="waitlist" />
           <div class="form-row">
             <input type="email" name="email" class="email-input" id="heroEmail" placeholder="your@email.com" required />
@@ -993,7 +988,7 @@ footer {
   <div class="cta-inner">
     <h2 class="cta-h2">Your home deserves<br>a little <em>Homli.</em></h2>
     <p class="cta-sub">Join the waitlist and be first to know when we launch. Early access members get 3 months of premium free.</p>
-    <form name="waitlist" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
+    <form name="waitlist" method="POST" data-netlify="true" class="cta-form" onsubmit="handleFormSubmit(event, 'ctaEmail', 'ctaSuccess')">
       <input type="hidden" name="form-name" value="waitlist" />
       <input type="email" name="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" required />
       <button type="submit" class="cta-btn">Join waitlist →</button>
@@ -1041,7 +1036,7 @@ footer {
   }, { threshold: 0.15 });
   reveals.forEach(el => observer.observe(el));
 
-  // Waitlist form — posts to Beehiiv API
+  // Waitlist form
   async function handleFormSubmit(e, inputId, successId) {
     e.preventDefault();
     const form = e.target;
@@ -1054,12 +1049,9 @@ footer {
       return;
     }
     try {
-      await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email })
-      });
-    } catch(err) { console.log('Beehiiv error', err); }
+      const data = new FormData(form);
+      await fetch('/', { method: 'POST', body: new URLSearchParams(data).toString(), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    } catch(err) { console.log('Form submission error', err); }
     form.style.display = 'none';
     success.style.display = 'block';
     const counter = document.getElementById('counter');
